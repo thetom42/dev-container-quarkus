@@ -1,5 +1,5 @@
 #FROM mcr.microsoft.com/vscode/devcontainers/base:buster
-FROM gitpod/workspace-base:branch-se-extract-base
+FROM gitpod/workspace-full:latest
 
 # General Options
 ARG INSTALL_ZSH="true"
@@ -34,8 +34,8 @@ ARG NONROOT_USER=gitpod
 COPY .devcontainer/library-scripts/*.sh /tmp/library-scripts/
 
 # Refresh apt package lists & install common packages
-RUN apt-get update \
-    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
+#RUN apt-get update \
+#    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
 
 # Install Docker CE CLI
 #RUN /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}"
@@ -69,10 +69,10 @@ RUN bash /tmp/library-scripts/java-debian.sh "${JAVA_VERSION:-lts}" "${SDKMAN_DI
     && if [ "${INSTALL_GRADLE}" = "true" ]; then bash /tmp/library-scripts/gradle-debian.sh "${GRADLE_VERSION:-latest}" "${SDKMAN_DIR}" ${USERNAME} "true"; fi
 
 # Install Node
-ENV NVM_DIR=/usr/local/share/nvm
-ENV NVM_SYMLINK_CURRENT=true \
-    PATH="${NVM_DIR}/current/bin:${PATH}"
-RUN if [ "$INSTALL_NODE" = "true" ]; then bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${USERNAME}"; fi
+#ENV NVM_DIR=/usr/local/share/nvm
+#ENV NVM_SYMLINK_CURRENT=true \
+#    PATH="${NVM_DIR}/current/bin:${PATH}"
+#RUN if [ "$INSTALL_NODE" = "true" ]; then bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${USERNAME}"; fi
 
 # Clean up
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
