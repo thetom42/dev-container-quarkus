@@ -1,0 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - redhat.vscode-quarkus@1.7.0:fJGFsW65eB36/bnRf4kqvQ==
+    - vscjava.vscode-maven@0.21.2:tFEkt2FqLujaNTLU5AmRiQ==
+    - humao.rest-client@0.24.4:zy4YO0p/vGcDbgPap4k4+A==
+    - ms-azuretools.vscode-docker@1.8.1:xuHtLS23Q5czFwYH7grcCQ==
