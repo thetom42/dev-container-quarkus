@@ -43,8 +43,8 @@ RUN curl -sSL "https://get.sdkman.io?rcupdate=false" | bash && \
     chown -R gitpod /usr/local/sdkman && \
     updaterc "export SDKMAN_DIR=/usr/local/sdkman\nsource /usr/local/sdkman/bin/sdkman-init.sh"
 
-RUN su gitpod -c "source usr/local/sdkman/bin/sdkman-init.sh && \
-    sdk install java 20.3.0.r11-grl && sdk flush archives && sdk flush temp"
+RUN source usr/local/sdkman/bin/sdkman-init.sh && \
+    sdk install java 20.3.0.r11-grl && sdk flush archives && sdk flush temp
 
 RUN apt-get update && \
     apt-get -yq install build-essential libz-dev zlib1g-dev && \
