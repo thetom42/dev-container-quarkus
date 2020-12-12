@@ -40,7 +40,7 @@ RUN apt-get update && \
       strace
 
 RUN curl -sSL "https://get.sdkman.io?rcupdate=false" | bash && \
-    updaterc "export SDKMAN_DIR=/usr/local/sdkman\nsource /usr/local/sdkman/bin/sdkman-init.sh"
+    echo -e "export SDKMAN_DIR=/usr/local/sdkman\nsource /usr/local/sdkman/bin/sdkman-init.sh" | tee -a /etc/bash.bashrc >> /etc/zsh/zshrc
 
 RUN source usr/local/sdkman/bin/sdkman-init.sh && \
     sdk install java 20.3.0.r11-grl && sdk flush archives && sdk flush temp
