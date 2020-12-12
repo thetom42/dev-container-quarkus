@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:buster
 ARG INSTALL_ZSH="true"
 ARG UPGRADE_PACKAGES="true"
 ARG USERNAME=gitpod
-ARG USER_UID=1000
+ARG USER_UID="automatic"
 ARG USER_GID=$USER_UID
 
 # Docker Options
