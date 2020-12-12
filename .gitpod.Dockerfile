@@ -1,5 +1,5 @@
 #FROM mcr.microsoft.com/vscode/devcontainers/base:buster
-FROM gitpod/workspace-full:latest
+FROM debian:buster-slim
 
 # General Options
 ARG INSTALL_ZSH="true"
@@ -80,6 +80,8 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tm
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
+
+USER ${NONROOT_USER}
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to
 # the Docker socket if "overrideCommand": false is set in devcontainer.json.
