@@ -39,17 +39,17 @@ RUN apt-get update && \
       man-db \
       strace
 
-RUN curl -s "https://get.sdkman.io" | bash
+RUN export SDKMAN_DIR="/usr/local/sdkman" && curl -s "https://get.sdkman.io" | bash
 
-RUN /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh; sdk version; sdk install java 20.3.0.r11-grl; sdk flush archives; sdk flush temp"
+RUN /bin/bash -c "source /usr/local/sdkman/bin/sdkman-init.sh; sdk version; sdk install java 20.3.0.r11-grl; sdk flush archives; sdk flush temp"
 
 RUN apt-get update && \
     apt-get -yq install build-essential libz-dev zlib1g-dev
 
-#RUN export GRAALVM_HOME=/usr/local/sdkman/candidates/java/current && \
-#    /usr/local/sdkman/candidates/java/current/bin/gu install native-image
+RUN export GRAALVM_HOME=/usr/local/sdkman/candidates/java/current && \
+    /usr/local/sdkman/candidates/java/current/bin/gu install native-image
 
-RUN /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh; sdk version; sdk install maven 3.6.2; sdk flush archives; sdk flush temp"
+RUN /bin/bash -c "source /usr/local/sdkman/bin/sdkman-init.sh; sdk version; sdk install maven 3.6.2; sdk flush archives; sdk flush temp"
 
 RUN apt-get upgrade -yq && \
     apt-get autoremove
