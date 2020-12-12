@@ -2,11 +2,11 @@
 FROM debian:buster-slim
 
 # General Options
-ARG INSTALL_ZSH="true"
-ARG UPGRADE_PACKAGES="true"
-ARG USERNAME=gitpod
-ARG USER_UID="automatic"
-ARG USER_GID=$USER_UID
+#ARG INSTALL_ZSH="true"
+#ARG UPGRADE_PACKAGES="true"
+#ARG USERNAME=gitpod
+#ARG USER_UID="automatic"
+#ARG USER_GID=$USER_UID
 
 # Docker Options
 #ARG ENABLE_NONROOT_DOCKER="true"
@@ -14,28 +14,28 @@ ARG USER_GID=$USER_UID
 #ARG TARGET_SOCKET=/var/run/docker.sock
 
 # Java Options
-ARG INSTALL_JAVA="true"
-ARG JAVA_VERSION="20.3.0.r11-grl"
+#ARG INSTALL_JAVA="true"
+#ARG JAVA_VERSION="20.3.0.r11-grl"
 
 # Maven Options
-ARG INSTALL_MAVEN="true"
-ARG MAVEN_VERSION="3.6.2"
+#ARG INSTALL_MAVEN="true"
+#ARG MAVEN_VERSION="3.6.2"
 
 # Gradle Options
-ARG INSTALL_GRADLE="false"
-ARG GRADLE_VERSION=""
+#ARG INSTALL_GRADLE="false"
+#ARG GRADLE_VERSION=""
 
 # Node.js Options
-ARG INSTALL_NODE="false"
-ARG NODE_VERSION="lts/*"
+#ARG INSTALL_NODE="false"
+#ARG NODE_VERSION="lts/*"
 
 # Copy all install scripts
-ARG NONROOT_USER=gitpod
-COPY .devcontainer/library-scripts/*.sh /tmp/library-scripts/
+#ARG NONROOT_USER=gitpod
+#COPY .devcontainer/library-scripts/*.sh /tmp/library-scripts/
 
 # Refresh apt package lists & install common packages
-RUN apt-get update \
-    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
+#RUN apt-get update \
+#    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
 
 # Install Docker CE CLI
 #RUN /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}"
@@ -62,11 +62,11 @@ RUN apt-get update \
 #    && chmod +x /usr/local/share/docker-init.sh
 
 # Install Java, Maven, Gradle
-ENV SDKMAN_DIR="/usr/local/sdkman"
-ENV PATH="${PATH}:${SDKMAN_DIR}/java/current/bin:${SDKMAN_DIR}/maven/current/bin:${SDKMAN_DIR}/gradle/current/bin"
-RUN bash /tmp/library-scripts/java-debian.sh "${JAVA_VERSION:-lts}" "${SDKMAN_DIR}" "${USERNAME}" "true" \
-    && if [ "${INSTALL_MAVEN}" = "true" ]; then bash /tmp/library-scripts/maven-debian.sh "${MAVEN_VERSION:-latest}" "${SDKMAN_DIR}" ${USERNAME} "true"; fi \
-    && if [ "${INSTALL_GRADLE}" = "true" ]; then bash /tmp/library-scripts/gradle-debian.sh "${GRADLE_VERSION:-latest}" "${SDKMAN_DIR}" ${USERNAME} "true"; fi
+#ENV SDKMAN_DIR="/usr/local/sdkman"
+#ENV PATH="${PATH}:${SDKMAN_DIR}/java/current/bin:${SDKMAN_DIR}/maven/current/bin:${SDKMAN_DIR}/gradle/current/bin"
+#RUN bash /tmp/library-scripts/java-debian.sh "${JAVA_VERSION:-lts}" "${SDKMAN_DIR}" "${USERNAME}" "true" \
+#    && if [ "${INSTALL_MAVEN}" = "true" ]; then bash /tmp/library-scripts/maven-debian.sh "${MAVEN_VERSION:-latest}" "${SDKMAN_DIR}" ${USERNAME} "true"; fi \
+#    && if [ "${INSTALL_GRADLE}" = "true" ]; then bash /tmp/library-scripts/gradle-debian.sh "${GRADLE_VERSION:-latest}" "${SDKMAN_DIR}" ${USERNAME} "true"; fi
 
 # Install Node
 #ENV NVM_DIR=/usr/local/share/nvm
@@ -81,11 +81,11 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tm
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
-USER ${NONROOT_USER}
+#USER ${NONROOT_USER}
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to
 # the Docker socket if "overrideCommand": false is set in devcontainer.json.
 # The script will also execute CMD if you need to alter startup behaviors.
 #ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 #CMD [ "sleep", "infinity" ]
-ENTRYPOINT []
+#ENTRYPOINT []
