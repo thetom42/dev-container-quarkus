@@ -1,5 +1,5 @@
 #FROM mcr.microsoft.com/vscode/devcontainers/base:buster
-FROM gitpod/workspace-base
+FROM gitpod/workspace-base:branch-se-extract-base
 
 # General Options
 ARG INSTALL_ZSH="true"
