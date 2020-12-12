@@ -85,3 +85,4 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tm
 # The script will also execute CMD if you need to alter startup behaviors.
 #ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 #CMD [ "sleep", "infinity" ]
+ENTRYPOINT []
