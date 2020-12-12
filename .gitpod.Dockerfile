@@ -1,5 +1,5 @@
 #FROM mcr.microsoft.com/vscode/devcontainers/base:buster
-FROM ubuntu:20.04
+FROM gitpod/workspace-base
 
 # General Options
 ARG INSTALL_ZSH="true"
