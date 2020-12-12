@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/vscode/devcontainers/base:buster
+#FROM mcr.microsoft.com/vscode/devcontainers/base:buster
+FROM ubuntu:20.04
 
 # General Options
 ARG INSTALL_ZSH="true"
