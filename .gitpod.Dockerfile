@@ -40,7 +40,6 @@ RUN apt-get update && \
       strace
 
 RUN curl -sSL "https://get.sdkman.io?rcupdate=false" | bash && \
-    chown -R gitpod /usr/local/sdkman && \
     updaterc "export SDKMAN_DIR=/usr/local/sdkman\nsource /usr/local/sdkman/bin/sdkman-init.sh"
 
 RUN source usr/local/sdkman/bin/sdkman-init.sh && \
