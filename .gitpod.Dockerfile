@@ -8,9 +8,9 @@ ARG USER_UID="automatic"
 ARG USER_GID=$USER_UID
 
 # Docker Options
-ARG ENABLE_NONROOT_DOCKER="true"
-ARG SOURCE_SOCKET=/var/run/docker-host.sock
-ARG TARGET_SOCKET=/var/run/docker.sock
+#ARG ENABLE_NONROOT_DOCKER="true"
+#ARG SOURCE_SOCKET=/var/run/docker-host.sock
+#ARG TARGET_SOCKET=/var/run/docker.sock
 
 # Java Options
 ARG INSTALL_JAVA="true"
@@ -25,7 +25,7 @@ ARG INSTALL_GRADLE="false"
 ARG GRADLE_VERSION=""
 
 # Node.js Options
-ARG INSTALL_NODE="true"
+ARG INSTALL_NODE="false"
 ARG NODE_VERSION="lts/*"
 
 # Copy all install scripts
@@ -37,7 +37,7 @@ RUN apt-get update \
     && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
 
 # Install Docker CE CLI
-RUN /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}"
+#RUN /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}"
 
 # Install kubectl & Helm
 #RUN bash /tmp/library-scripts/kubectl-helm-debian.sh
@@ -49,16 +49,16 @@ RUN /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "
 #    && echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc /root/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
 
 # Default to root only access to the Docker socket, set up non-root init script
-RUN touch /var/run/docker.socket \
-    && ln -s /var/run/docker.socket /var/run/docker-host.socket \
-    && apt-get -y install socat
+#RUN touch /var/run/docker.socket \
+#    && ln -s /var/run/docker.socket /var/run/docker-host.socket \
+#    && apt-get -y install socat
 
 # Create docker-init.sh to spin up socat
-RUN echo "#!/bin/sh\n\
-    sudo rm -rf /var/run/docker-host.socket\n\
-    ((sudo socat UNIX-LISTEN:/var/run/docker.socket,fork,mode=660,user=${NONROOT_USER} UNIX-CONNECT:/var/run/docker-host.socket) 2>&1 >> /tmp/vscr-dind-socat.log) & > /dev/null\n\
-    \"\$@\"" >> /usr/local/share/docker-init.sh \
-    && chmod +x /usr/local/share/docker-init.sh
+#RUN echo "#!/bin/sh\n\
+#    sudo rm -rf /var/run/docker-host.socket\n\
+#    ((sudo socat UNIX-LISTEN:/var/run/docker.socket,fork,mode=660,user=${NONROOT_USER} UNIX-CONNECT:/var/run/docker-host.socket) 2>&1 >> /tmp/vscr-dind-socat.log) & > /dev/null\n\
+#    \"\$@\"" >> /usr/local/share/docker-init.sh \
+#    && chmod +x /usr/local/share/docker-init.sh
 
 # Install Java, Maven, Gradle
 ENV SDKMAN_DIR="/usr/local/sdkman"
@@ -83,5 +83,5 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tm
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to
 # the Docker socket if "overrideCommand": false is set in devcontainer.json.
 # The script will also execute CMD if you need to alter startup behaviors.
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-CMD [ "sleep", "infinity" ]
+#ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
+#CMD [ "sleep", "infinity" ]
