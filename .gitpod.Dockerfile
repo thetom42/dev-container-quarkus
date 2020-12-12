@@ -39,8 +39,9 @@ RUN apt-get update && \
       man-db \
       strace
 
-RUN curl -s "https://get.sdkman.io" | bash && \
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
+RUN curl -s "https://get.sdkman.io" | bash
+    
+RUN sh "$HOME/.sdkman/bin/sdkman-init.sh"
 
 RUN sdk install java 20.3.0.r11-grl && sdk flush archives && sdk flush temp
 
