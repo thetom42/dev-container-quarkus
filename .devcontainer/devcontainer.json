@@ -1,0 +1,64 @@
+{
+	"name": "Quarkus",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			// Options
+			"INSTALL_MAVEN": "true",
+			"INSTALL_GRADLE": "false",
+			"INSTALL_NODE": "false",
+			//"JAVA_VERSION": "lts",
+			"JAVA_VERSION": "20.3.0.r11-grl",
+			"MAVEN_VERSION": "3.6.2",
+			"NODE_VERSION": "lts/*"
+		}
+	},
+
+	//"runArgs": ["--privileged"],
+
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
+	},
+
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind",
+		// Uncomment the next line to also sync certs in your .minikube folder
+		"source=${env:HOME}${env:USERPROFILE}/.minikube,target=/usr/local/share/minikube-localhost,type=bind"
+	], 
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"java.home": "/usr/local/sdkman/candidates/java/current",
+		"vs-kubernetes": {
+			"vs-kubernetes.kubectl-path.linux": "/usr/local/bin/kubectl",
+			"vs-kubernetes.helm-path.linux": "/usr/local/bin/helm",
+		},
+		"java.server.launchMode": "Standard"
+	},
+	
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"vscjava.vscode-java-pack",
+		"redhat.vscode-quarkus",
+		"humao.rest-client",
+		"ms-azuretools.vscode-docker", 
+		"ms-kubernetes-tools.vscode-kubernetes-tools",
+		"redhat.vscode-yaml",
+		"redhat.vscode-xml"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "bash /usr/local/share/copy-kube-config.sh",
+
+	"overrideCommand": false,
+	
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+
+	"workspaceFolder": "/workspaces/dev-container-quarkus"
+}
